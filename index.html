@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>❤️ZSFan'S WebDav❤️</title>
+
+  <!-- 引入 Bootstrap 样式 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJk3QhqLMpG8r+KnujsCh9+vZ1ehVYuPxXq2EWr9+r0KrbV2F5tGntZpp9d8" crossorigin="anonymous">
+  
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f7f6;
+      padding-top: 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .file-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: flex-start;
+    }
+
+    .file-card {
+      background-color: #ffffff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: calc(33.33% - 20px);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    .file-card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .file-card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .file-card .file-info {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .file-card .file-info h5 {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0;
+      color: #333;
+    }
+
+    .file-card .file-info p {
+      font-size: 14px;
+      color: #777;
+      margin: 5px 0;
+    }
+
+    .file-card .file-info a {
+      font-size: 14px;
+      color: #007bff;
+      text-decoration: none;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .file-card .file-info a:hover {
+      text-decoration: underline;
+    }
+
+    .loading-spinner {
+      display: none;
+      text-align: center;
+      margin: 50px 0;
+    }
+
+    .search-bar {
+      margin-bottom: 20px;
+    }
+
+    .pagination-container {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .action-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .action-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* 响应式布局 */
+    @media (max-width: 768px) {
+      .file-card {
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 992px) {
+      .file-card {
+        width: calc(50% - 20px);
+      }
+    }
+
+    @media (min-width: 992px) {
+      .file-card {
+        width: calc(33.33% - 20px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>❤️ZSFan'S WebDav❤️</h1>
+    </div>
+
+    <!-- 搜索框 -->
+    <div class="mb-4 search-bar">
+      <input id="search-input" type="text" class="form-control" placeholder="搜索文件..." oninput="filterFiles()" />
+    </div>
+
+    <!-- 排序选择 -->
+    <div class="mb-4">
+      <select id="sort-select" class="form-select" onchange="sortFiles()">
+        <option value="name">按名称排序</option>
+        <option value="size">按大小排序</option>
+        <option value="date">按日期排序</option>
+      </select>
+    </div>
+
+    <div id="loading" class="loading-spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">加载中...</span>
+      </div>
+    </div>
+
+    <div id="file-list" class="file-list">
+      <!-- 文件列表动态插入 -->
+    </div>
+
+    <!-- 分页 -->
+    <div id="pagination" class="pagination-container">
+      <!-- 分页内容动态插入 -->
+    </div>
+  </div>
+
+  <!-- 预览模态框 -->
+  <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="previewModalLabel">文件预览</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="file-preview-container" class="text-center">
+            <!-- 文件预览内容会插入这里 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 重命名模态框 -->
+  <div class="modal fade" id="renameModal" tabindex="-1" aria-labelledby="renameModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="renameModalLabel">重命名文件</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="new-name" class="form-control" placeholder="请输入新文件名" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" onclick="renameFile()">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 删除确认模态框 -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">确认删除文件</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>您确定要删除该文件吗？</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-danger" onclick="deleteFile()">删除</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 引入 Bootstrap 和自定义脚本 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
