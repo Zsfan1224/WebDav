@@ -1,0 +1,163 @@
+/* 通用样式 */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f7f6;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.header {
+  background-color: #007bff;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.search-bar {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.file-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.file-card {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: calc(33.33% - 20px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.file-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.file-card img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.file-card .file-info h5 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin: 10px 0;
+}
+
+.file-card .file-info p {
+  font-size: 14px;
+  color: #777;
+}
+
+.file-card .file-info a {
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.file-card .file-info a:hover {
+  text-decoration: underline;
+}
+
+.loading-spinner {
+  display: none;
+  text-align: center;
+  margin: 50px 0;
+}
+
+.pagination-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* 搜索框 */
+.search-bar input {
+  font-size: 1rem;
+}
+
+/* 文件操作按钮 */
+.action-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.action-btn:hover {
+  background-color: #0056b3;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+  .file-card {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .file-card {
+    width: calc(50% - 20px);
+  }
+}
+
+@media (min-width: 992px) {
+  .file-card {
+    width: calc(33.33% - 20px);
+  }
+}
+
+/* 模态框样式 */
+.modal-content {
+  border-radius: 10px;
+}
+
+.modal-header {
+  background-color: #007bff;
+  color: white;
+}
+
+.modal-header .btn-close {
+  background-color: white;
+  color: #007bff;
+}
+
+.modal-body {
+  font-size: 1rem;
+}
+
+/* 加载动画 */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3rem;
+  color: #007bff;
+}
