@@ -1,163 +1,106 @@
-/* 通用样式 */
+/* 基本样式 */
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f4f7f6;
-  color: #333;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 0 20px;
-}
-
-.header {
-  background-color: #007bff;
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 2rem;
-}
-
-.search-bar {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.file-list {
+  background-color: #1b2735;
+  font-family: 'Arial', sans-serif;
+  color: #ffffff;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
 }
 
-.file-card {
-  background-color: #ffffff;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: calc(33.33% - 20px);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-bottom: 20px;
-  text-align: center;
+h1 {
+  color: #ff9f1c;
 }
 
-.file-card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transform: translateY(-5px);
+.game-table {
+  width: 90%;
+  max-width: 800px;
+  height: auto;
+  background: radial-gradient(circle, #2e8b57 0%, #1b2735 100%);
+  border-radius: 15px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
 }
 
-.file-card img {
-  width: 100%;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 10px;
+.player-hand {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
-.file-card .file-info h5 {
+.card {
+  width: 50px;
+  height: 70px;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 16px;
   font-weight: bold;
-  color: #333;
-  margin: 10px 0;
-}
-
-.file-card .file-info p {
-  font-size: 14px;
-  color: #777;
-}
-
-.file-card .file-info a {
-  font-size: 14px;
-  color: #007bff;
-  text-decoration: none;
-}
-
-.file-card .file-info a:hover {
-  text-decoration: underline;
-}
-
-.loading-spinner {
-  display: none;
+  color: #000000;
   text-align: center;
-  margin: 50px 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-.pagination-container {
-  margin-top: 30px;
-  text-align: center;
+.card.red {
+  color: #e63946;
 }
 
-/* 搜索框 */
-.search-bar input {
-  font-size: 1rem;
+.card:hover {
+  transform: scale(1.1);
 }
 
-/* 文件操作按钮 */
-.action-btn {
-  background-color: #007bff;
+.control-panel {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.button {
+  background: linear-gradient(45deg, #ff9f1c, #ff4040);
   color: white;
   border: none;
-  padding: 5px 10px;
-  font-size: 14px;
+  padding: 10px 20px;
+  font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.action-btn:hover {
-  background-color: #0056b3;
+.button:hover {
+  background: linear-gradient(45deg, #ff7f1c, #ff2020);
+  transform: translateY(-3px);
 }
 
-/* 响应式布局 */
+#game-info {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #ffffff;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
-  .file-card {
-    width: 100%;
+  .card {
+    width: 40px;
+    height: 60px;
+    font-size: 14px;
   }
-}
 
-@media (min-width: 768px) and (max-width: 992px) {
-  .file-card {
-    width: calc(50% - 20px);
+  .button {
+    font-size: 14px;
+    padding: 8px 16px;
   }
-}
-
-@media (min-width: 992px) {
-  .file-card {
-    width: calc(33.33% - 20px);
-  }
-}
-
-/* 模态框样式 */
-.modal-content {
-  border-radius: 10px;
-}
-
-.modal-header {
-  background-color: #007bff;
-  color: white;
-}
-
-.modal-header .btn-close {
-  background-color: white;
-  color: #007bff;
-}
-
-.modal-body {
-  font-size: 1rem;
-}
-
-/* 加载动画 */
-.spinner-border {
-  width: 3rem;
-  height: 3rem;
-  border-width: 0.3rem;
-  color: #007bff;
 }
